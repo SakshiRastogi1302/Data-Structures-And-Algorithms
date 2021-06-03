@@ -1,5 +1,5 @@
 //Question Link:- https://classroom.pepcoding.com/myClassroom/the-placement-program-pitampura-jan-15-2021/introduction-to-recursion/print-increasing-official/ojquestion
-package Recursion.Intrduction_To_Recursion;
+package Recursion.Introduction_To_Recursion;
 
 
 import java.util.*;
