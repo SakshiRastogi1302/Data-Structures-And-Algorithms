@@ -1,5 +1,5 @@
 //Question Link:- https://classroom.pepcoding.com/myClassroom/the-placement-program-pitampura-jan-15-2021/recursion-with-arraylist/get-subsequence-official/ojquestion
-package Recursion.Recursion_In_ArrayLists;
+package Recursion.Recursion_With_ArrayLists;
 
 
 import java.util.*;
