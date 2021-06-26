@@ -5,7 +5,7 @@ import java.util.*;
 public class GenericTreeImplementation {
     public static class Node{
         int data;
-        ArrayList<Node> children=new ArrayList<>();  //ArrayList of children will be created at the time of parsing.
+        ArrayList<Node> children=new ArrayList<>();  //This ArrayList of children will be created at the time of parsing.
     }
 
     public static Node constructGenericTree(int arr[]){
