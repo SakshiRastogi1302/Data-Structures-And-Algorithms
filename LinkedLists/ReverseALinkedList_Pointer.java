@@ -1,7 +1,9 @@
+package LinkedLists;
+
 import java.io.*;
 import java.util.*;
 
-public class MaiReverseALinkedList_Pointern {
+public class ReverseALinkedList_Pointer {
   public static class Node {
     int data;
     Node next;
