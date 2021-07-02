@@ -1,9 +1,10 @@
-//Question Link:- https://classroom.pepcoding.com/myClassroom/the-placement-program-pitampura-jan-15-2021/generic-tree/find-in-tree-official/ojquestion
+//Question Link:- https://classroom.pepcoding.com/myClassroom/the-placement-program-pitampura-jan-15-2021/generic-tree/lca-generic-tree-official/ojquestion
 package GenericTrees;
+
 import java.io.*;
 import java.util.*;
 
-public class FindInGenericTree {
+public class LowestCommonAncestor {
   private static class Node {
     int data;
     ArrayList<Node> children = new ArrayList<>();
@@ -46,20 +47,42 @@ public class FindInGenericTree {
     return root;
   }
 
-  public static boolean find(Node node, int data) {
+  public static ArrayList<Integer> nodeToRootPath(Node node, int data) {
+    if (node.data == data) {
+      ArrayList<Integer> path = new ArrayList<>();
+      path.add(node.data);
+      return path;
+    }
+
+    for (Node child : node.children) {
+      ArrayList<Integer> ptc = nodeToRootPath(child, data);
+      if (ptc.size() > 0) {
+        ptc.add(node.data);
+        return ptc;
+      }
+    }
+
+    return new ArrayList<>();
+  }
+  
+  
+
+  public static int lca(Node node, int d1, int d2) {
     // write your code here
-    if(node.data==data){
-        return true;
+    ArrayList<Integer> r1=nodeToRootPath(node,d1);
+    ArrayList<Integer> r2=nodeToRootPath(node,d2);
+    
+    int i=r1.size()-1;
+    int j=r2.size()-1;
+    
+    while(i>=0 && j>=0 && r1.get(i)==r2.get(j)){
+        i--;
+        j--;
     }
     
-    for(Node child:node.children){
-        boolean result=find(child,data);
-        if(result==true){
-            return true;
-        }
-    }
-    
-    return false;
+    i++;
+    return r1.get(i);
+
   }
 
   public static void main(String[] args) throws Exception {
@@ -71,11 +94,12 @@ public class FindInGenericTree {
       arr[i] = Integer.parseInt(values[i]);
     }
 
-    int data = Integer.parseInt(br.readLine());
+    int d1 = Integer.parseInt(br.readLine());
+    int d2 = Integer.parseInt(br.readLine());
 
     Node root = construct(arr);
-    boolean flag = find(root, data);
-    System.out.println(flag);
+    int lca = lca(root, d1, d2);
+    System.out.println(lca);
     // display(root);
   }
 

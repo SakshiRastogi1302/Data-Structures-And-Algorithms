@@ -1,10 +1,9 @@
-//Question Link:- https://classroom.pepcoding.com/myClassroom/the-placement-program-pitampura-jan-15-2021/generic-tree/levelorder-linewise-generic-tree-official/ojquestion
+//Question Link:- https://classroom.pepcoding.com/myClassroom/the-placement-program-pitampura-jan-15-2021/generic-tree/mirror-generic-tree-official/ojquestion
 package GenericTrees;
-
 import java.io.*;
 import java.util.*;
 
-public class LevelOrderLinewiseGenericTree {
+public class MirrorAGenericTree {
   private static class Node {
     int data;
     ArrayList<Node> children = new ArrayList<>();
@@ -94,25 +93,44 @@ public class LevelOrderLinewiseGenericTree {
     System.out.println("Node Post " + node.data);
   }
 
-  public static void levelOrderLinewise(Node node){
+  public static void levelOrderLinewiseZZ(Node node){
+    Stack<Node> stack = new Stack<>();
+    stack.add(node);
+
+    Stack<Node> cstack = new Stack<>();
+    int level = 0;
+
+    while(stack.size() > 0){
+      node = stack.pop();
+      System.out.print(node.data + " ");
+
+      if(level % 2 == 0){
+        for(int i = 0; i < node.children.size(); i++){
+          Node child = node.children.get(i);
+          cstack.push(child);
+        }
+      } else {
+        for(int i = node.children.size() - 1; i >= 0; i--){
+          Node child = node.children.get(i);
+          cstack.push(child);
+        }
+      }
+
+      if(stack.size() == 0){
+        stack = cstack;
+        cstack = new Stack<>();
+        level++;
+        System.out.println();
+      }
+    }
+  }
+
+  public static void mirror(Node node){
     // write your code here
-    Queue<Node> mainQueue=new ArrayDeque<>();
-    Queue<Node> helpQueue=new ArrayDeque<>();
+    Collections.reverse(node.children);
     
-    mainQueue.add(node);
-    while(mainQueue.size()>0){
-        Node poppedNode=mainQueue.remove();
-        System.out.print(poppedNode.data+" ");
-        for(Node child:poppedNode.children){
-                helpQueue.add(child);
-        }
-        
-        if(mainQueue.size()==0){
-            System.out.println();
-            Queue<Node> tempS=mainQueue;
-            mainQueue=helpQueue;
-            helpQueue=tempS;
-        }
+    for(Node childNode:node.children){
+        mirror(childNode);
     }
   }
 
@@ -126,7 +144,9 @@ public class LevelOrderLinewiseGenericTree {
     }
 
     Node root = construct(arr);
-    levelOrderLinewise(root);
+    display(root);
+    mirror(root);
+    display(root);
   }
 
 }

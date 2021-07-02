@@ -1,9 +1,9 @@
-//Question Link:- https://classroom.pepcoding.com/myClassroom/the-placement-program-pitampura-jan-15-2021/generic-tree/find-in-tree-official/ojquestion
 package GenericTrees;
+
 import java.io.*;
 import java.util.*;
 
-public class FindInGenericTree {
+public class NodeWithMaximumSubtreeSum {
   private static class Node {
     int data;
     ArrayList<Node> children = new ArrayList<>();
@@ -46,20 +46,24 @@ public class FindInGenericTree {
     return root;
   }
 
-  public static boolean find(Node node, int data) {
-    // write your code here
-    if(node.data==data){
-        return true;
-    }
-    
-    for(Node child:node.children){
-        boolean result=find(child,data);
-        if(result==true){
-            return true;
-        }
-    }
-    
-    return false;
+  static int maxN=0;
+  static int maxSum=Integer.MIN_VALUE;
+  public static int maxSumOfSubTree(Node node){
+      int sum=0;
+      for(Node child:node.children){
+          int childSum=maxSumOfSubTree(child);
+          sum+=childSum;
+      }
+      
+      sum+=node.data;
+      
+      if(maxSum<sum){
+          maxSum=sum;
+          maxN=node.data;
+      }
+      
+      return sum;
+      
   }
 
   public static void main(String[] args) throws Exception {
@@ -71,12 +75,10 @@ public class FindInGenericTree {
       arr[i] = Integer.parseInt(values[i]);
     }
 
-    int data = Integer.parseInt(br.readLine());
-
     Node root = construct(arr);
-    boolean flag = find(root, data);
-    System.out.println(flag);
-    // display(root);
+    // write your code here
+    maxSumOfSubTree(root);
+    System.out.println(maxN+"@"+maxSum);
   }
 
 }

@@ -1,10 +1,11 @@
-//Question Link:- https://classroom.pepcoding.com/myClassroom/the-placement-program-pitampura-jan-15-2021/generic-tree/levelorder-linewise-generic-tree-official/ojquestion
+//Question Link:- https://classroom.pepcoding.com/myClassroom/the-placement-program-pitampura-jan-15-2021/generic-tree/is-generic-tree-symmetric-official/ojquestion
+
 package GenericTrees;
 
 import java.io.*;
 import java.util.*;
 
-public class LevelOrderLinewiseGenericTree {
+public class IsGenericTreeSymmetric {
   private static class Node {
     int data;
     ArrayList<Node> children = new ArrayList<>();
@@ -82,40 +83,35 @@ public class LevelOrderLinewiseGenericTree {
     return h;
   }
 
-  public static void traversals(Node node){
-    System.out.println("Node Pre " + node.data);
-
-    for(Node child: node.children){
-      System.out.println("Edge Pre " + node.data + "--" + child.data);
-      traversals(child);
-      System.out.println("Edge Post " + node.data + "--" + child.data);
-    }
-
-    System.out.println("Node Post " + node.data);
-  }
-
-  public static void levelOrderLinewise(Node node){
+  public static boolean isMirror(Node n1, Node n2) {
     // write your code here
-    Queue<Node> mainQueue=new ArrayDeque<>();
-    Queue<Node> helpQueue=new ArrayDeque<>();
+    if(n1.children.size()!=n2.children.size()){
+        return false;
+    }
     
-    mainQueue.add(node);
-    while(mainQueue.size()>0){
-        Node poppedNode=mainQueue.remove();
-        System.out.print(poppedNode.data+" ");
-        for(Node child:poppedNode.children){
-                helpQueue.add(child);
-        }
+    for(int i=0;i<n1.children.size();i++){
+        int j=n1.children.size()-1-i;
+        Node nC1=n1.children.get(i);
+        Node nC2=n2.children.get(j);
         
-        if(mainQueue.size()==0){
-            System.out.println();
-            Queue<Node> tempS=mainQueue;
-            mainQueue=helpQueue;
-            helpQueue=tempS;
+        if(isMirror(nC1,nC2)==false){
+            return false;
         }
     }
+    
+    return true;
   }
 
+  public static boolean IsSymmetric(Node node) {
+    // write your code here
+    boolean result=isMirror(node,node);
+    if(result==true){
+        return true;
+    }
+    else{
+        return false;
+    }
+  }
   public static void main(String[] args) throws Exception {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     int n = Integer.parseInt(br.readLine());
@@ -126,7 +122,9 @@ public class LevelOrderLinewiseGenericTree {
     }
 
     Node root = construct(arr);
-    levelOrderLinewise(root);
+    boolean sym = IsSymmetric(root);
+    System.out.println(sym);
+    // display(root);
   }
 
 }

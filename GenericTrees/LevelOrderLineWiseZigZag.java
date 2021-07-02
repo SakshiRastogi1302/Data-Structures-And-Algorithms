@@ -1,10 +1,10 @@
-//Question Link:- https://classroom.pepcoding.com/myClassroom/the-placement-program-pitampura-jan-15-2021/generic-tree/levelorder-linewise-generic-tree-official/ojquestion
+//Question Link:- https://www.pepcoding.com/resources/online-java-foundation/generic-tree/levelorder-linewise-zigzag-official/ojquestion
 package GenericTrees;
 
 import java.io.*;
 import java.util.*;
 
-public class LevelOrderLinewiseGenericTree {
+public class LevelOrderLineWiseZigZag {
   private static class Node {
     int data;
     ArrayList<Node> children = new ArrayList<>();
@@ -94,24 +94,35 @@ public class LevelOrderLinewiseGenericTree {
     System.out.println("Node Post " + node.data);
   }
 
-  public static void levelOrderLinewise(Node node){
+  public static void levelOrderLinewiseZZ(Node node){
     // write your code here
-    Queue<Node> mainQueue=new ArrayDeque<>();
-    Queue<Node> helpQueue=new ArrayDeque<>();
+    int level=0;
+    Stack <Node> mainS=new Stack<>();  
+    Stack <Node> helpS=new Stack<>();  
     
-    mainQueue.add(node);
-    while(mainQueue.size()>0){
-        Node poppedNode=mainQueue.remove();
+    mainS.push(node);
+    
+    while(mainS.size()>0){
+        Node poppedNode=mainS.pop();
         System.out.print(poppedNode.data+" ");
-        for(Node child:poppedNode.children){
-                helpQueue.add(child);
+        if(level%2==0){
+            for(Node childNode:poppedNode.children){
+                helpS.push(childNode);
+            }
+        }
+        else{
+            for(int i=poppedNode.children.size()-1;i>=0;i--){
+                Node childNode=poppedNode.children.get(i);
+                helpS.push(childNode);
+            }
         }
         
-        if(mainQueue.size()==0){
+        if(mainS.size()==0){
             System.out.println();
-            Queue<Node> tempS=mainQueue;
-            mainQueue=helpQueue;
-            helpQueue=tempS;
+            level++;
+            Stack<Node> tempS=mainS;
+            mainS=helpS;
+            helpS=tempS;
         }
     }
   }
@@ -126,7 +137,7 @@ public class LevelOrderLinewiseGenericTree {
     }
 
     Node root = construct(arr);
-    levelOrderLinewise(root);
+    levelOrderLinewiseZZ(root);
   }
 
 }

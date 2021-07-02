@@ -1,9 +1,10 @@
-//Question Link:- https://classroom.pepcoding.com/myClassroom/the-placement-program-pitampura-jan-15-2021/generic-tree/find-in-tree-official/ojquestion
+//Question Link:- https://classroom.pepcoding.com/myClassroom/the-placement-program-pitampura-jan-15-2021/generic-tree/pred-succ-generic-tree-official/ojquestion
 package GenericTrees;
+
 import java.io.*;
 import java.util.*;
 
-public class FindInGenericTree {
+public class PredecessorAndSuccessorOfAnElement {
   private static class Node {
     int data;
     ArrayList<Node> children = new ArrayList<>();
@@ -46,20 +47,27 @@ public class FindInGenericTree {
     return root;
   }
 
-  public static boolean find(Node node, int data) {
+  static Node predecessor;
+  static Node successor;
+  static int state=0;
+  public static void predecessorAndSuccessor(Node node, int data) {
     // write your code here
-    if(node.data==data){
-        return true;
-    }
-    
-    for(Node child:node.children){
-        boolean result=find(child,data);
-        if(result==true){
-            return true;
+    if(state==0){
+        if(node.data==data){
+            state=1;
+        }
+        else{
+            predecessor=node;
         }
     }
+    else if(state==1){
+        successor=node;
+        state=2;
+    }
     
-    return false;
+    for(Node childNode:node.children){
+        predecessorAndSuccessor(childNode,data);
+    }
   }
 
   public static void main(String[] args) throws Exception {
@@ -74,9 +82,20 @@ public class FindInGenericTree {
     int data = Integer.parseInt(br.readLine());
 
     Node root = construct(arr);
-    boolean flag = find(root, data);
-    System.out.println(flag);
-    // display(root);
+    predecessor = null;
+    successor = null;
+    predecessorAndSuccessor(root, data);
+    if(predecessor == null){
+      System.out.println("Predecessor = Not found");
+    } else {
+      System.out.println("Predecessor = " + predecessor.data);
+    }
+
+    if(successor == null){
+      System.out.println("Successor = Not found");
+    } else {
+      System.out.println("Successor = " + successor.data);
+    }
   }
 
 }

@@ -1,9 +1,10 @@
-//Question Link:- https://classroom.pepcoding.com/myClassroom/the-placement-program-pitampura-jan-15-2021/generic-tree/find-in-tree-official/ojquestion
+//Question Link:- https://classroom.pepcoding.com/myClassroom/the-placement-program-pitampura-jan-15-2021/generic-tree/kth-largest-element-generic-tree-official/ojquestion
 package GenericTrees;
+
 import java.io.*;
 import java.util.*;
 
-public class FindInGenericTree {
+public class KthLargestElementInTree {
   private static class Node {
     int data;
     ArrayList<Node> children = new ArrayList<>();
@@ -46,20 +47,39 @@ public class FindInGenericTree {
     return root;
   }
 
-  public static boolean find(Node node, int data) {
+  
+  static int ceil;
+  static int floor;
+  public static void ceilAndFloor(Node node, int data) {
+    if(node.data > data){
+      if(node.data < ceil){
+        ceil = node.data;
+      }
+    }
+
+    if(node.data < data){
+      if(node.data > floor){
+        floor = node.data;
+      }
+    }
+
+    for (Node child : node.children) {
+      ceilAndFloor(child, data);
+    }
+  }
+
+  public static int kthLargest(Node node, int k){
     // write your code here
-    if(node.data==data){
-        return true;
+    floor=Integer.MIN_VALUE;
+    int factor=Integer.MAX_VALUE;
+    
+    for(int i=1;i<=k;i++){
+        ceilAndFloor(node,factor);
+        factor=floor;
+        floor=Integer.MIN_VALUE;
     }
     
-    for(Node child:node.children){
-        boolean result=find(child,data);
-        if(result==true){
-            return true;
-        }
-    }
-    
-    return false;
+    return factor;
   }
 
   public static void main(String[] args) throws Exception {
@@ -71,12 +91,11 @@ public class FindInGenericTree {
       arr[i] = Integer.parseInt(values[i]);
     }
 
-    int data = Integer.parseInt(br.readLine());
+    int k = Integer.parseInt(br.readLine());
 
     Node root = construct(arr);
-    boolean flag = find(root, data);
-    System.out.println(flag);
-    // display(root);
+    int kthLargest = kthLargest(root, k);
+    System.out.println(kthLargest);
   }
 
 }

@@ -1,9 +1,10 @@
-//Question Link:- https://classroom.pepcoding.com/myClassroom/the-placement-program-pitampura-jan-15-2021/generic-tree/find-in-tree-official/ojquestion
+//Question Link:- https://classroom.pepcoding.com/myClassroom/the-placement-program-pitampura-jan-15-2021/generic-tree/diameter-of-generic-tree-official/ojquestion
 package GenericTrees;
+
 import java.io.*;
 import java.util.*;
 
-public class FindInGenericTree {
+public class DiameterOfGenericTree {
   private static class Node {
     int data;
     ArrayList<Node> children = new ArrayList<>();
@@ -45,22 +46,31 @@ public class FindInGenericTree {
 
     return root;
   }
-
-  public static boolean find(Node node, int data) {
-    // write your code here
-    if(node.data==data){
-        return true;
-    }
-    
-    for(Node child:node.children){
-        boolean result=find(child,data);
-        if(result==true){
-            return true;
-        }
-    }
-    
-    return false;
+  
+  static int dia=0;
+  public static int diameter(Node node){
+      int dch=-1;
+      int sdch=-1;
+      
+      for(Node childNode:node.children){
+          int cht=diameter(childNode);
+          if(cht>dch){
+              sdch=dch;
+              dch=cht;
+          }
+          else if(cht>sdch){
+              sdch=cht;
+          }
+      }
+      
+      if(sdch+dch+2>dia){
+          dia=sdch+dch+2;
+      }
+      
+      return dch+1;
+      
   }
+  
 
   public static void main(String[] args) throws Exception {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -71,12 +81,10 @@ public class FindInGenericTree {
       arr[i] = Integer.parseInt(values[i]);
     }
 
-    int data = Integer.parseInt(br.readLine());
-
     Node root = construct(arr);
-    boolean flag = find(root, data);
-    System.out.println(flag);
-    // display(root);
+    // write your code here
+    diameter(root);
+    System.out.println(dia);
   }
 
 }

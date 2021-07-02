@@ -1,9 +1,10 @@
-//Question Link:- https://classroom.pepcoding.com/myClassroom/the-placement-program-pitampura-jan-15-2021/generic-tree/find-in-tree-official/ojquestion
+//Question Link:- https://classroom.pepcoding.com/myClassroom/the-placement-program-pitampura-jan-15-2021/generic-tree/node-to-root-path-official/ojquestion
 package GenericTrees;
+
 import java.io.*;
 import java.util.*;
 
-public class FindInGenericTree {
+public class NodeToRootPathInGenericTree {
   private static class Node {
     int data;
     ArrayList<Node> children = new ArrayList<>();
@@ -46,22 +47,28 @@ public class FindInGenericTree {
     return root;
   }
 
-  public static boolean find(Node node, int data) {
+ public static ArrayList<Integer> nodeToRootPath(Node node, int data){
     // write your code here
     if(node.data==data){
-        return true;
+        ArrayList<Integer> al=new ArrayList<>();
+        al.add(node.data);
+        return al;
     }
     
-    for(Node child:node.children){
-        boolean result=find(child,data);
-        if(result==true){
-            return true;
+    for(Node childNode:node.children){
+        ArrayList<Integer> result=nodeToRootPath(childNode,data);
+        if(result.size()>0){
+            result.add(node.data);
+            return result;
+            
         }
+        
     }
     
-    return false;
-  }
-
+    return new ArrayList<Integer>();
+    
+    
+ }
   public static void main(String[] args) throws Exception {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     int n = Integer.parseInt(br.readLine());
@@ -74,8 +81,8 @@ public class FindInGenericTree {
     int data = Integer.parseInt(br.readLine());
 
     Node root = construct(arr);
-    boolean flag = find(root, data);
-    System.out.println(flag);
+    ArrayList<Integer> path = nodeToRootPath(root, data);
+    System.out.println(path);
     // display(root);
   }
 

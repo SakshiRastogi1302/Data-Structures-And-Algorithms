@@ -1,9 +1,10 @@
-//Question Link:- https://classroom.pepcoding.com/myClassroom/the-placement-program-pitampura-jan-15-2021/generic-tree/find-in-tree-official/ojquestion
+//Question Link:- https://classroom.pepcoding.com/myClassroom/the-placement-program-pitampura-jan-15-2021/generic-tree/iterative-preorder-postorder-generic-tree-official/ojquestion
 package GenericTrees;
+
 import java.io.*;
 import java.util.*;
 
-public class FindInGenericTree {
+public class IterativePreorderAndPostorderOfGenericTree {
   private static class Node {
     int data;
     ArrayList<Node> children = new ArrayList<>();
@@ -46,20 +47,8 @@ public class FindInGenericTree {
     return root;
   }
 
-  public static boolean find(Node node, int data) {
+  public static void IterativePreandPostOrder(Node node) {
     // write your code here
-    if(node.data==data){
-        return true;
-    }
-    
-    for(Node child:node.children){
-        boolean result=find(child,data);
-        if(result==true){
-            return true;
-        }
-    }
-    
-    return false;
   }
 
   public static void main(String[] args) throws Exception {
@@ -71,12 +60,8 @@ public class FindInGenericTree {
       arr[i] = Integer.parseInt(values[i]);
     }
 
-    int data = Integer.parseInt(br.readLine());
-
     Node root = construct(arr);
-    boolean flag = find(root, data);
-    System.out.println(flag);
-    // display(root);
+    IterativePreandPostOrder(root);
   }
 
 }
