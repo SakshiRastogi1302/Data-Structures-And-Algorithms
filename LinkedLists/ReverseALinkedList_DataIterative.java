@@ -1,10 +1,10 @@
-//Question Link:- https://classroom.pepcoding.com/myClassroom/the-placement-program-pitampura-jan-15-2021/linked-list/mid-linked-list-official/ojquestion
+//Question Link:- https://classroom.pepcoding.com/myClassroom/the-placement-program-pitampura-jan-15-2021/linked-list/reverse-di-official/ojquestion
 package LinkedLists;
 
 import java.io.*;
 import java.util.*;
 
-public class MidOfLinkedList {
+public class ReverseALinkedList_DataIterative {
   public static class Node {
     int data;
     Node next;
@@ -157,77 +157,31 @@ public class MidOfLinkedList {
         size--;
       }
     }
-
-    private Node getNodeAt(int idx) {
-      Node temp = head;
-      for (int i = 0; i < idx; i++) {
-        temp = temp.next;
-      }
-      return temp;
+    
+    public Node getNodeAt(int idx){
+        Node temp=head;
+        while(idx>0){
+            temp=temp.next;
+            idx--;
+        }
+        return temp;
     }
-
     public void reverseDI() {
-      int li = 0;
-      int ri = size - 1;
-      while(li < ri){
-        Node left = getNodeAt(li);
-        Node right = getNodeAt(ri);
-
-        int temp = left.data;
-        left.data = right.data;
-        right.data = temp;
-
-        li++;
-        ri--;
-      }
-    }
- 
-    public void reversePI(){
-      if(size <= 1){
-        return;
-      }
-
-      Node prev = null;
-      Node curr = head;
-      while(curr != null){
-        Node next = curr.next;
-        
-        curr.next = prev;
-        prev = curr;
-        curr = next;
-      }
-
-      Node temp = head;
-      head = tail;
-      tail = temp;
-    }
-  
-    public int kthFromLast(int k){
-      Node slow = head;
-      Node fast = head;
-      for(int i = 0; i < k; i++){
-        fast = fast.next;
-      }
-
-      while(fast != tail){
-        slow = slow.next;
-        fast = fast.next;
-      }
-
-      return slow.data;
-    }
- 
-    public int mid(){
       // write your code here
-      Node slow=head;
-      Node fast=head;
+      int li=0;
+      int ri=size-1;
       
-      while(fast.next!=null && fast.next.next!=null){
-          slow=slow.next;
-          fast=fast.next.next;
-      }
-      
-      return slow.data;
+      while(li<ri){
+          Node node1=getNodeAt(li);
+          Node node2=getNodeAt(ri);
+          
+          int val=node1.data;
+          node1.data=node2.data;
+          node2.data=val;
+          
+          li++;
+          ri--;
+      } 
     }
   }
 
@@ -276,13 +230,6 @@ public class MidOfLinkedList {
         list.removeAt(idx);
       } else if(str.startsWith("reverseDI")){
         list.reverseDI();
-      } else if(str.startsWith("reversePI")){
-        list.reversePI();
-      } else if(str.startsWith("kthFromEnd")){
-        int idx = Integer.parseInt(str.split(" ")[1]);
-        System.out.println(list.kthFromLast(idx));
-      } else if(str.startsWith("mid")){
-        System.out.println(list.mid());
       }
       str = br.readLine();
     }

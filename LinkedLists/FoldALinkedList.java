@@ -1,10 +1,10 @@
-//Question Link:- https://classroom.pepcoding.com/myClassroom/the-placement-program-pitampura-jan-15-2021/linked-list/remove-duplicates-official/ojquestion
+//Question Link:- https://classroom.pepcoding.com/myClassroom/the-placement-program-pitampura-jan-15-2021/linked-list/fold-linkedlist-official/ojquestion
 package LinkedLists;
 
 import java.io.*;
 import java.util.*;
 
-public class RemoveDuplicatesInASortedLinkedList {
+public class FoldALinkedList {
   public static class Node {
     int data;
     Node next;
@@ -257,11 +257,11 @@ public class RemoveDuplicatesInASortedLinkedList {
       return ml;
     }
 
-    public static Node midNode(Node head, Node tail){
+    public static Node midNode(Node head, Node tail) {
       Node f = head;
       Node s = head;
 
-      while(f != tail && f.next != tail){
+      while (f != tail && f.next != tail) {
         f = f.next.next;
         s = s.next;
       }
@@ -269,8 +269,8 @@ public class RemoveDuplicatesInASortedLinkedList {
       return s;
     }
 
-    public static LinkedList mergeSort(Node head, Node tail){
-      if(head == tail){
+    public static LinkedList mergeSort(Node head, Node tail) {
+      if (head == tail) {
         LinkedList br = new LinkedList();
         br.addLast(head.data);
         return br;
@@ -282,29 +282,144 @@ public class RemoveDuplicatesInASortedLinkedList {
       LinkedList sl = mergeTwoSortedLists(fsh, ssh);
       return sl;
     }
-  
-    public void removeDuplicates(){
-      // write your code here
-      Node start=new Node();
-      start.data=0;
-      Node temp=start;
-      
-      Node traverse=head;
-      while(traverse!=null){
-          if(traverse.data!=temp.data){
-              temp.next=traverse;
-              temp=traverse;
-             
-          }
-          
-           traverse=traverse.next;
-           temp.next=null;
-          
-      }
-      
-      head=start.next;
-      tail=temp;
 
+    public void removeDuplicates() {
+      LinkedList res = new LinkedList();
+
+      while (this.size() > 0) {
+        int val = this.getFirst();
+        this.removeFirst();
+
+        if (res.size() == 0 || val != res.tail.data) {
+          res.addLast(val);
+        }
+      }
+
+      this.head = res.head;
+      this.tail = res.tail;
+      this.size = res.size;
+    }
+
+    public void oddEven() {
+      LinkedList odd = new LinkedList();
+      LinkedList even = new LinkedList();
+
+      while (this.size > 0) {
+        int val = this.getFirst();
+        this.removeFirst();
+
+        if (val % 2 == 0) {
+          even.addLast(val);
+        } else {
+          odd.addLast(val);
+        }
+      }
+
+      if (odd.size > 0 && even.size > 0) {
+        odd.tail.next = even.head;
+
+        this.head = odd.head;
+        this.tail = even.tail;
+        this.size = odd.size + even.size;
+      } else if (odd.size > 0) {
+        this.head = odd.head;
+        this.tail = odd.tail;
+        this.size = odd.size;
+      } else if (even.size > 0) {
+        this.head = even.head;
+        this.tail = even.tail;
+        this.size = even.size;
+      }
+    }
+
+    public void kReverse(int k) {
+      LinkedList prev = null;
+
+      while (this.size > 0) {
+        LinkedList curr = new LinkedList();
+
+        if (this.size >= k) {
+          for (int i = 0; i < k; i++) {
+            int val = this.getFirst();
+            this.removeFirst();
+            curr.addFirst(val);
+          }
+        } else {
+          int sz = this.size;
+          for (int i = 0; i < sz; i++) {
+            int val = this.getFirst();
+            this.removeFirst();
+            curr.addLast(val);
+          }
+        }
+
+        if (prev == null) {
+          prev = curr;
+        } else {
+          prev.tail.next = curr.head;
+          prev.tail = curr.tail;
+          prev.size += curr.size;
+        }
+      }
+
+      this.head = prev.head;
+      this.tail = prev.tail;
+      this.size = prev.size;
+    }
+
+    private void displayReverseHelper(Node node) {
+      if (node == null) {
+        return;
+      }
+      displayReverseHelper(node.next);
+      System.out.print(node.data + " ");
+    }
+
+    public void displayReverse() {
+      displayReverseHelper(head);
+      System.out.println();
+    }
+
+    private void reversePRHelper(Node node) {
+      if (node == tail) {
+        return;
+      }
+      reversePRHelper(node.next);
+      node.next.next = node;
+    }
+
+    public void reversePR() {
+      reversePRHelper(head);
+      Node temp = head;
+      head = tail;
+      tail = temp;
+      tail.next = null;
+    }
+    
+    public void foldHelper(Node right,int floor){
+        if(right==null){
+            return;
+        }
+        
+        foldHelper(right.next,floor+1);
+        if(floor>size/2){
+            Node temp=fleft.next;
+            fleft.next=right;
+            right.next=temp;
+            fleft=temp;
+        }
+        else if(floor==size/2){
+            tail=right;
+            tail.next=null;
+        }
+    }
+
+    Node fleft;
+    public void fold() {
+      // write your code here
+      fleft=head;
+      foldHelper(head,0);
+      
     }
   }
 
@@ -319,8 +434,14 @@ public class RemoveDuplicatesInASortedLinkedList {
       l1.addLast(d);
     }
 
+    int a = Integer.parseInt(br.readLine());
+    int b = Integer.parseInt(br.readLine());
+
     l1.display();
-    l1.removeDuplicates();
+    l1.fold();
+    l1.display();
+    l1.addFirst(a);
+    l1.addLast(b);
     l1.display();
   }
 }

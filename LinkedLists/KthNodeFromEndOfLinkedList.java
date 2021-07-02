@@ -1,10 +1,10 @@
-//Question Link:- https://classroom.pepcoding.com/myClassroom/the-placement-program-pitampura-jan-15-2021/linked-list/mid-linked-list-official/ojquestion
+//Question Link:- https://classroom.pepcoding.com/myClassroom/the-placement-program-pitampura-jan-15-2021/linked-list/kth-from-last-official/ojquestion
 package LinkedLists;
 
 import java.io.*;
 import java.util.*;
 
-public class MidOfLinkedList {
+public class KthNodeFromEndOfLinkedList {
   public static class Node {
     int data;
     Node next;
@@ -203,28 +203,17 @@ public class MidOfLinkedList {
     }
   
     public int kthFromLast(int k){
-      Node slow = head;
-      Node fast = head;
-      for(int i = 0; i < k; i++){
-        fast = fast.next;
-      }
-
-      while(fast != tail){
-        slow = slow.next;
-        fast = fast.next;
-      }
-
-      return slow.data;
-    }
- 
-    public int mid(){
       // write your code here
       Node slow=head;
       Node fast=head;
       
-      while(fast.next!=null && fast.next.next!=null){
+      for(int i=1;i<=k;i++){
+          fast=fast.next;
+      }
+      
+      while(fast.next!=null){
           slow=slow.next;
-          fast=fast.next.next;
+          fast=fast.next;
       }
       
       return slow.data;
@@ -281,8 +270,6 @@ public class MidOfLinkedList {
       } else if(str.startsWith("kthFromEnd")){
         int idx = Integer.parseInt(str.split(" ")[1]);
         System.out.println(list.kthFromLast(idx));
-      } else if(str.startsWith("mid")){
-        System.out.println(list.mid());
       }
       str = br.readLine();
     }
